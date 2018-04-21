@@ -1,0 +1,134 @@
+- Declare a variable
+a = 5
+b = 6
+c = 'string'
+
+- an array
+d = [1 2 3]
+
+- a map
+f = {key`val key`val}
+
+- declare a function with 2 arguments which returns a sum
+fn a b = a + b
+
+- declare a function with 2 arguments 
+- show branching and switching
+fn a b =
+  | a = b , b
+  | a /= b, a
+  | a > b , a
+  | a < b , a
+  | a <= b, a
+  | a >= b, b
+  | default
+
+- pass result of previous function to next function
+add a b = a + b
+sub a b = a - b
+
+fn a b = add a b -> sub a -> sub a
+
+
+- add 3 5  = 8
+- sub 3 8 = 3 -8 = -5
+- sub -5 3 = -5 -3 = -8
+
+- pass result of previous funciton to function at a specific argument
+fn a b = add a b -> sub _ a -> sub _ a
+- for fn 3 5 
+- add 3 5 = 8
+- sub 8 3 = 8 -3 = 5
+- sub 5 3 = 2
+
+- to break a line
+function longArgumentName anotherLongArgumentName = (
+  longArgumentName - anotherLongArgumentName *
+  longArgumentName + anotherLongArgumentName
+)
+
+- any time there is a need to break a line, simply wrap in parens
+- including function declaration and variabls
+function (
+  longArgumentName
+  longArgName2
+  aThirdArgName
+  moreArgs
+) = (
+  moreArgs - aThirdArgName * longArgName2 / longArgumentName
+  % moreArgs <= longArgName2
+)
+
+- line breaks in an array definition
+arrayDef = [
+  1 2 3 4 5
+  6 7 8 9 0
+  ...
+]
+
+- to declare a type
+vector3 a b c = [a b c]
+
+- functions have the power to create a strong type
+- vector3 is now a type which has 3 values
+- to create a more traditional object
+vector3 a b c = {a b c}
+
+- vector3 is now an object that can be referenced via dot notation
+myVec = vector3 1 (add 2 3) 4
+
+- 1
+myVec.a 
+- 5
+myVec.b
+- 4
+myVec.c
+
+- {a b c} is syntax which will assign properties of the name given
+- and assign the values to that property
+- similar to {a`a b`b c`c}
+
+- array methods
+a = [1 2 3]
+- map
+fn/a
+
+- filter
+fn|a
+
+- exists
+fn el a
+
+- reduce
+- operator a
+- sum
++a
+- bool
+>a
+&a
+||a 
+
+- list comprehension
+result = [fn x | x el arr | x < 5 | x < 3 |  x + 2 > 100]
+
+- arbitrary for loop
+fn x i
+  | i % 2 = 0     = i 
+  | i % 3 = 0     = add x i
+  | i % 4 = 0     = sub x i
+  | i % 3 * 2 = 0 = sub x i -> add _ x
+  | x
+
+result = (fn x i | x i el arr)
+
+
+- nested for loop
+fn x y i j = arr i j <- 0
+(fn x y i j -> print | x i el arr, y j el arr2)
+
+
+
+
+
+
+- alskdjflkasdj982173049587read this to know what is happening
