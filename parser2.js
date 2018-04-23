@@ -1,76 +1,39 @@
+const fs = require('fs')
 
-const code =
-  `
-  - a comment
-  myVar <- 5
-  abcd  <- 6
-  nums  <- 1 2 3 3 4 5
-  obj   <- one\`1 two\`2 three\`3 four\`4 myVar
-  str   <- 'hello world'
+const getUntilNextAssign = (ln, lineNum, lns) =>{
+  return ln
+  return `this is an assign ${ln}`
 
-  fna a   = a * myVar
-  fnb _   = print str
+}
 
-  add a b = a + b
-  add5    = add 5
-  mul a b = a * b
-  
-  newFn a b = a + b
-  fn1 a b   = 
-   | a == b -> a
-   | b
-  
+const getUntilNextFn = (ln, lineNum,  lns) =>{
+  return `this is a fn ${ln}`
 
-  fn2 a b = newFn a b -> fn1 a
-  fn3 a b = 
-    | fn1 a b > 1 -> 0
-    | 1
+}
+const parse = file => {
+  const noComments = (file.split('\r\n').filter(ln => (ln.slice(0,2) !== '- ')))
+  console.log(noComments
+  .reduce((joined, line) => {
+    if(line.length) return joined + ' <joined>' + line.trim()
+    else return joined + ' <grouped>' 
+  })
+  .split(' <grouped>')
+  .map(group => group.split(' <joined>'))
+  .map(group => {
+    return group.map((ln, lineNum, lns) => {
+        if(ln.includes('<-')){
+          return getUntilNextAssign(ln, lineNum, lns)
+        }
+        else if (ln[0] !== '|' && (ln[ln.length - 1] === '=' || ln.includes(' = '))){
+          console.log(ln)
+          return getUntilNextFn(ln, lineNum, lns)
+        }
+        return ln
 
-   e~!@#$%^&*()_+=-\`,./<>?;':"[]\\{}|'
-  fn' a b = 
-     a + b
-  a fn b 
-  what = fn2 a b -> _ \fn 5
-    
-  result <- 
-    fn1 myVar abcd -> newFn str
+      })
+  }))
+}
 
-  intList =
-    1 2 3
-    4 5 6
-    7 8 9 10
+const file = fs.readFileSync('./test.m', 'UTF-8')
+parse(file)
 
-  object =
-      a\`a b\`b
-      c\`c
-
-  map    fn arr = fn / arr
-  where  fn arr = fn | arr
-  reduce fn arr = fn _ arr
-  find   fn arr = fn ? arr
-  indOf  fn arr = fn @ arr
-  each   fn arr = fn ..arr
-
-  len arr   = #arr
-
-  range n m interval = 
-    | interval -> map (mul interval) range n m
-    |        m -> n!m 
-    |       !n
-
-  keys dict = ..dict\`
-  vals dict = ..\`dict
-  kvs  dict = ..dict\`dict
-  spread ad = ...ad
-
-
-  gtFive a = a > 5
-
-  addFiveWhereGtFiveAndReduce = 
-    where gtFive intList 
-    -> map add5 
-    -> reduce add
-
-  anotherWay = add _add5 /gtFive |intList
-  yetAnother = intList |gtFive /add5 _add
-  `

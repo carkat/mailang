@@ -31,6 +31,32 @@ const makeVar = node => {
     return variable
 }
 
+// - map over /
+// - filter |
+// - reduce _
+// - count #
+// - exists ? 
+// - index of @
+
+// arrayMethodSymbols <- '/ ... | _ # ? @ @@ << >> <=> ! <><|> \' ..'
+// spread      = ...
+// each        = ..
+// map         = /
+// filter      = |
+// reduce      = _
+// count       = #
+// exists      = ?
+// indOf       = @
+// allIndOf    = @@
+// rotateLeft  = <<
+// rotateRight = >>
+// reverse     = <=>
+// sort        = !
+// slice       = <|>
+
+// - single quote
+// unique      = '' 
+
 const evalCodeTree = tree => {
     tree.map(node => {
         return node.is === 'function' && node.body 
