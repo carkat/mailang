@@ -1,9 +1,9 @@
-booleanSymbols <- 'T F & V | -> <-> !<-> = != < <= >= > '
-mathSymbols    <- '+ - / * //'
+- booleanSymbols <- 'T F & V | -> <-> !<-> = != < <= >= > '
+- mathSymbols    <- '+ - / * //'
 
-arraySymbols <- ';'
+- arraySymbols <- ';'
 
-dictSymbols  <- `
+- dictSymbols  <- `
 
 - function declartion symbol
 
