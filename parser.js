@@ -32,26 +32,60 @@ const replaceAll = str => {
 }
 
 
-const parseArr = a => {
-    return a
+const checkBracketBalance = (brackets, stack) => {
+    const symbols = { all: '[{]}', open: '{[', close:'}]', '}': '{', ']':'[','{':'}', '[':']' }
+    brackets.forEach(char => {
+        symbols.open.includes(char) ? stack.push(char)
+        : (symbols.close.includes(char)) && (stack[stack.length - 1] === symbols[char]) 
+        ? stack.pop() : null
+    })
+    return stack
 }
-const parseDict = d => {
-    return d
+const parseMultiLineCollection = (ln, lineNum, lns, a, arr = '') => {
+    console.log(ln, lns[lineNum])
+    const symbols = { all: '[{]}', open: '{[', close:'}]', '}': '{', ']':'[','{':'}', '[':']' }
+    let stack = checkBracketBalance(
+       a.split('').filter(char => symbols.all.includes(char)),
+        []
+    )
+    arr += lns[lineNum][1]
+
+    while(stack.length){
+        console.log(a)
+        const nextLine = lns[++lineNum]
+        stack = checkBracketBalance(
+            nextLine[0].filter(char => symbols.all.includes(char)),
+            stack
+        )
+        arr += `,${nextLine[0]}`
+        //a stupid hack to clear out this line in the list of lines
+        lns[lineNum] = '|'
+    }
+    if(!stack.length){
+        console.log('success')
+    }
+    const parsed = (replaceAll(arr.replace(/`/g, ':')))
+    return parsed.split(',').slice(1,-1)
 }
+
 const parseAssignement = (ln, lineNum, lns, value) => {
     const parsed = (replaceAll(value.join(' ').replace(/`/g, ':')))
     const isInt  = !isNaN(parseInt(parsed))
-    const isDict = parsed[0] === '{'
+    const isDic  = parsed[0] === '{'
     const isArr  = parsed[0] === '['
+    // console.log(parsed)
 
     return {
-        value  : parseInt(parsed)||parsed,
+        value: isInt ? parseInt(parsed) 
+             : isArr ? parseMultiLineCollection(ln, lineNum, lns, parsed)
+             : isDic ? parseMultiLineCollection(ln, lineNum, lns, parsed)
+             : parsed,
         is: isInt 
             ? 'int' 
-            : isDict ? 'dict' 
-            : isArr  ? 'arr'
+            : isDic ? 'dict' 
+            : isArr ? 'arr'
             : typeof(parsed),
-        message: typeof(parsed) === 'string' && [!isInt, !isDict, !isArr].reduce((a,b)=>a&&b) 
+        message: typeof(parsed) === 'string' && [!isInt, !isDic, !isArr].reduce((a,b)=>a&&b) 
             ? 'parse the string to see if it has any computations required' : 'none'
     }
 }
@@ -59,7 +93,7 @@ const parseAssignement = (ln, lineNum, lns, value) => {
 const parseFunctionBody = (ln, lineNum, lns, body) => {
     const symbols = [
         '*', '.*', '+', '/', '//', '->','-', '==', '/=' , '_',
-        '|', '..'
+        '|', '..',
     ]
     const bodyStr = body.join(' ')
     const guards  = body.find(str => str[0] === '|')
@@ -194,9 +228,67 @@ const eval = str => {
     .map(splitOnAssignment)
     .map(splitEachSide)
     .map((ln, lineNum, lns) => parseLn(ln, lineNum, lns))
+    console.log(parsedFile)
     return parsedFile
 }
 
+
+/**
+ * first match all brackets
+ * collapse brackets on multiple lines
+ * 
+ * dict is defined as a list with ` separated key values
+ * dict = one`1 two`2 three`3 four`4
+ * 
+ * an array is defined as space separated values
+ * arr = 1 2 3 4
+ * 
+ * nested arrays are semicolon separated 2 dimensional array
+ * nestArr = 1 2 ; 1 2 3 ; 1 2 3 4
+ * 1 2 
+ * 1 2 3
+ * 1 2 3 4
+ * 
+ * if a nested value is itself an array or object use parens
+ * 1 2; 1 (2 3) ; (1 2) (three`3 four`4)
+ * 1     2
+ * 1     (2 3) 
+ * (1 2) (three`3 four`4)
+ * 
+ * of cours variables can be inserted into arrays
+ * twoThree  = 2 3
+ * oneTow    = 1 2
+ * threeFour = three`3 four`4
+ * 1 2; 1 twoThree; oneTwo threeFour
+ * 
+ * a string is defined as any set of characters enclosed by ''
+ * str = 'this is a string 
+ * 
+ * a string array is going to need special consideration
+ * strArr = 'string1' 'string2' 'string3'
+ * first split the line one '.+?', and count the indices. 
+ * 
+ * 
+ * another special case will be functtion application
+ * fn a b = a + b
+ * arr = 
+ *  fn 1 2 
+ *  fn 3 4 
+ *  fn 5 6
+ * arrays must be typed instead of untyped
+ * if there is already a type, then one cannot add a new type to an array to avoid confusion
+ * 
+ * what about simple function invocation
+ * var = fn 1 2 
+ * 
+ * when a function is called, read the number of arguments. if the parser encounters a -> or 
+ * another function before finishing applying enough arguments, or
+ * if not enough arguments are passed (i.e., undefined, or another function application)
+ * fn 1           - not enough arguments
+ * fn 1 2 3 ->... - too many arguments
+ * 
+ * 
+ */
 const code = (
   `
   - a comment
@@ -223,8 +315,15 @@ const code = (
 
 
   intList = [
-    1 2 3 4 4 
+      1 2 3
+      4 5 6
+      7 8 9 10
   ]
+  object = {
+      a\`a b\`b
+      c\`c
+  }
+
   `
 )
 module.exports = {

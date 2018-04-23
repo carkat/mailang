@@ -8,11 +8,25 @@ const makeFn = node => {
 };
 const makeArgs = args => args.map(x => x.length === 1 && x[0] === '_' ? 'nullVar = null' : x)
 const makeBody = body => {
-    return `return ${body}`
+    return `return ${body};`
 }
 
 const makeVar = node => {
-    const variable =  `const ${node.name} = ${node.value};\n`
+    let variable = ''
+    if(node.is === 'arr')
+        variable = `const ${node.name} = [${node.value}];\n`
+    else if(node.is === 'dict'){
+        const kvs = node.value.map(x =>{
+            let [key,val] = x.split(':')
+            if(val === undefined) val = key
+            return `"${key}": "${val}"`
+        })
+        variable = `const ${node.name} = {${kvs}};\n`
+    }
+    else if(node.is === 'string')
+        variable = `const ${node.name} = '${node.value}';\n`
+    else 
+        variable = `const ${node.name} = ${node.value};\n`
     console.log(variable)
     return variable
 }
