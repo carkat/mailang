@@ -11,7 +11,7 @@ const getUntilNextLineIsAssignmentOrDecl = (ln, lineNum, lns) =>{
     if(isAssign(nextLine))      return result
     else if(!nextLine.length)   return result
     else if(isFNDecl(nextLine)) return result
-    else result = result +  ' ' + nextLine
+    else result = result +  ' \n ' + nextLine
   }
   return result
 }
@@ -26,7 +26,7 @@ const groupAssignsAndDecls = group =>
     .filter(ln => ln.length)
 
 const parseFile = file => {
-  const noComments = (file.split('\r\n').filter(ln => (ln.slice(0,2) !== '- ')))
+  const noComments = (file.replace(/ +/g,' ').split('\r\n').filter(ln => (ln.slice(0,2) !== '- ')))
   const joinedGroupedLines = noComments
     .reduce((joined, line) => {
       if(line.length) return joined + ' <joined>' + line.trim()
@@ -46,18 +46,27 @@ const parseCode = code => {
     if(isAssign(ln)){
       const splitLine = ln
         .split('<-')
-        .map(ln => ln.trim().split(' '))
+        .map(ln => ln.trim())
       return {
         name: splitLine[0],
-        value: splitLine[1]
+        value: splitLine[1].split('\n')
       }
+    }
+    else if(isFNDecl(ln)){
+      const functionBody = ln
+        .split(' = ').slice(1).join('=').split('\n').filter(x=>x)
+      const functionName = ln
+        .split(' = ')[0]
 
-
+      return {
+        name: functionName,
+        body: functionBody
+      }
     }
   }))
 
 }
 
-const file = fs.readFileSync('./test.m', 'UTF-8')
+const file = fs.readFileSync('./test.js', 'UTF-8')
 parseCode(parseFile(file))
 

@@ -121,7 +121,7 @@ isOpenBracket  char = exists brackets.open  char
 isCloseBracket char = exists brackets.close char 
 
 fmtStr str      = split str '' -> join _ '' -> filter charIsBracket -> split _ '' 
-match str stack = each compare str 
+match str stack = each stack -> compare str
 
 
 - the type inside () is a space separated array
@@ -129,10 +129,7 @@ match str stack = each compare str
 compare char stack = 
   | isOpenBracket char         -> push stack char
   | isCloseBracket char
-  & doesntMatchTopOfStack char -> (
-    mergeStr (
-      'Found ' char ', but no opening bracket ' brackets char ' found')) 
-    -> error
+  & doesntMatchTopOfStack char -> (mergeStr ('Found ' char ', but no opening bracket ' brackets char ' found')) -> error
   | pop stack
 
 checkBalancedBrackets str = fmtStr str -> match _ stack
