@@ -1,7 +1,7 @@
 const fs = require('fs')
 
 const isAssign = ln => ln.includes('<-')
-const isFNDecl = ln => ln[0] !== '|' 
+const isFNDecl = ln => ln.trim()[0] !== '|' 
   && ln.split('=')[0].indexOf('<') === -1
   && (
     ln[ln.length - 1] === '=' 
@@ -33,7 +33,7 @@ const getUntilNextLineIsAssignmentOrDecl = (ln, lineNum, lns) =>{
     }
     else if(!nextLine.length)   return result
     else if(isFNDecl(nextLine)) return result
-    else result = result +  ' \n ' + nextLine
+    else result = result +  '\n' + nextLine
   }
   lns.forEach((x,i) => linesToClear)
 
@@ -55,7 +55,7 @@ const parseFile = file => {
   const noComments = (file.replace(/ +/g,' ').split('\r\n').filter(ln => (ln.slice(0,2) !== '- ')))
   const joinedGroupedLines = noComments
     .reduce((joined, line) => {
-      if(line.length) return joined + ' <joined>' + line.trim()
+      if(line.length) return joined + ' <joined>' + line
       else return joined + ' <grouped>' 
     })
     .split(' <grouped>')
@@ -71,9 +71,10 @@ const parseCode = code => {
   console.log(code.map(ln => {
     if(isFNDecl(ln)){
       const functionBody = ln
-        .split(' = ').slice(1).join(' = ').split('\n').filter(x=>x).map(x => x.trim())
+        .split(' = ').slice(1).join(' = ').split('\n').filter(x=>x).map(x => x)
       const functionHeader = ln
-        .split(' = ')[0]
+        .split(/\s=\s/)[0]
+      // console.log(ln)
 
       return {
         type: 'function',
@@ -84,8 +85,8 @@ const parseCode = code => {
     }
     else if(isAssign(ln)){
       const splitLine = ln
-        .split('<-')
-        .map(ln => ln.trim())
+        .split(/\s<-\s/)
+        .map(ln => ln)
       return {
         type: 'variable',
         name: splitLine[0],
