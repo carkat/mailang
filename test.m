@@ -1,6 +1,32 @@
 - booleanSymbols <- 'T F & V | -> <-> !<-> = != < <= >= > '
 - mathSymbols    <- '+ - / * //'
 
+blah <- { fn x | x e arr, x < 3, x < 5, x + 3 / 2 * 4 > 1 }
+
+blah <- map fn arr
+fn x = 
+  ? b <- doSomethingWith x
+  | x < 3
+  & x < 5
+  & x + 3 / 2 * 4 > 1 -> b
+  ? b <- doSomething x
+fn x = | x < 3 & x < 5 & x + 3.. -> b ? b <- doSomethingWith x
+
+// globalRedefines <-
+//   |  ` if elif
+//   &  ` and
+//   -> ` thenReturn
+//   ?  ` where
+//   <- ` equals
+//   <  ` isLessThan
+//   >  ` isGreaterThan
+
+fn x = 
+  if x isLessThan 3 
+  and x isLessThan 5 
+  and x + 3..isGreaterThan one thenReturn b 
+  where b equals doSomethingWith x
+
 - arraySymbols <- ';'
 
 - dictSymbols  <- `
@@ -32,10 +58,10 @@ ifThenElseIfElse <-
   | 4 / 5 ** 3
    
 
-- onlyIf works like true && true in other languages
-- in javascript true && funct() means when true, do the thing to the right
-- whereas onlyNot is akin to true || func in javascript
-- do this only when the previous is not true
+// - onlyIf works like true && true in other languages
+// - in javascript true && funct() means when true, do the thing to the right
+// - whereas onlyNot is akin to true || func in javascript
+// - do this only when the previous is not true
 onlyIf    <-   T =  T <-> T
 
 - XOR

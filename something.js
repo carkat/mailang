@@ -1,29 +1,16 @@
-const fs           = require('fs')
-const charCodeData = require('./parseTex')
-const file = fs.readFileSync('./something.txt', 'UTF-8')
-
-
-// console.log(charCodeData)
-// console.log(file.split('\r\n').map((ln, lineNum, lns) => {
-//     let modified = ln
-//     Object.keys(charCodeData).forEach(symbol => {
-//         if(ln.includes(symbol)){
-//             modified = modified.replace(symbol, charCodeData[symbol].code)
-//         }
-//     })
-//     return modified
-
-// }))
+const fs = require('fs')
+const file = fs.readFileSync('./cipher.txt', 'UTF-8')
 
 const iota      = n   => [...Array(n).keys()].map(x => x + 1)
 const factorial = n   => product(iota(n))
 const Sigma     = arr => arr.reduce((a, b) => a + b)
 const product   = arr => arr.reduce((a, b) => a * b)
+const count     = arr => arr.length
 
 const take = (num, arr) => {
   const n     = Math.abs(num)
   const len   = arr.length
-  const nWholeArrays = Math.ceil(len / n)
+  const nWholeArrays = Math.floor(n / len)
 
   const taker = a => iota(nWholeArrays).map(x => a)
     .reduce((x,y) => x.concat(y))
@@ -33,17 +20,18 @@ const take = (num, arr) => {
     ? taker(arr)    
     : num <= 0 && (len < n)
     ? taker(arr.reverse())
-    : len > n
+    : num >= 0 && len > n
     ? arr.slice(0, n)
+    : num <= 0 && len > n
+    ? arr.slice(num)
     : arr
 }
 
 const rhoLoop = (shape, arr, all) =>{
-  const more = shape.length > 1
+  const more  = shape.length > 1
   if(more){
-    const now = shape[0]
-    const nowA = iota(now)//[...Array(now).keys()]
-    console.log(nowA)
+    const now  = shape[0]
+    const nowA = iota(now)
     return nowA.map(n => {
       return rhoLoop(shape.slice(1), arr, all)
     })
@@ -59,7 +47,14 @@ const rho = (shape, arr) => {
 }
 
 
+// const cipher = Object.assign({}, ...file.split('\r\n').map(ln => {
+//     const [key, val] = ln.toLowerCase().trim().split(' ')
+//     return val instanceof Array || val instanceof 'object' => {[key]: val}
+//   }))
 
-// console.log(rho([3,2,5], [1,2,3,4]))
-console.log(take(-1, iota(10)))
-console.log(rho([10,2,5], iota(10)))
+// console.log(cipher)
+// const secret = 'abcdefghijklmnopqrstuvwxyz'
+// const cipher = 'aaaa'
+// const result = take(count(secret), cipher)
+// console.log(result, count(secret),secret.length, count(result), result.length)
+

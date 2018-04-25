@@ -5,24 +5,31 @@ A     ⟵ 1 2 3
 B     ⟵ 2 3 4
 D     ⟵ a`A b`num c`6
 
-emptyA ⟵ []
-emptyD ⟵ {}
+emptyArr ⟵ []
 
-multiLineA ⟵ 
+- also empty obj
+emptyDict ⟵ {}
+
+multiLineArr ⟵ 
     1 2 3
     4 5 6
 
-nestedA ⟵
+nestedArr ⟵
     1 2 3 ; 1 2 3
 
-multiDimA ⟵
+multiDimArr ⟵
    (1 2 3) (1 2 3); (1 2 3) (1 2 ( 1 2 3))
 
-multiLinD ⟵
+multiLinDict ⟵
     a`A
     b`num
     c`6
+    nestedDict`
+      a`A
+      b`num
+      c`6
 
+- iff also works as a function continuation 
 truthTable ⟵
     true   ` T
     false  ` F
@@ -44,8 +51,8 @@ sums A  = Σ A
 fn ⟵ a b: a + b
 
 
-- the first | is read "gif'
-- the second | is read "gelse if'
+- the first | is read "if'
+- the second | is read "else if'
 conditionalFunction a b = 
     | true  ⟵ true
     | true  
@@ -71,6 +78,9 @@ includes     A B = A ⊂ B
 includesOrEq A B = A ⊆ B
 equalSet     A B = A = B
 
+concat A B = A + B
+remove A B = A - B
+
 
 - if you need persistent variables in function scope
 - : is read "where"
@@ -85,9 +95,11 @@ sums3 A = Σ B
 - ∈ is the iteration operator
 - by default ∈ produces a few arguments
 - (tuple of values) index ∈ Array
-- { (the value to return) | interation, bool, bool, bool...}
-setBuilder  A = { a | a ∈ A }
-filter   fn A = { a | a ∈ A, fn a }
+- { (the value to return) | iteration, bool, bool, bool...}
+setBuilder               A = { a | a ∈ A }
+setBuilderWithIterators  A = { a + b + c | (a b c) a i ∈ A }
+
+filter   fn A = { a | a i ∈ A, fn a i A}
 map      fn A = { fn a | a ∈ A }
 
 
@@ -97,9 +109,62 @@ reduce fn A = result
     : result = ∀ (a b) ∈ A | fn a b
 
 - T or F
-exists   val A = ∃ a ∈ A | a = val
-eachTrue val A = ∀ a ∈ A | a < 5
+exists      val A = ∃ a ∈ A | a = val
+eachTrue boolFn A = ∀ a ∈ A | boolFn a
 
 uniqueSet   A = { a | a ∈ A, ¬exists a B }
     : B ⟵ []
 
+
+fn a b = add a b ⟶ sub a ⟶ add _ a ⟶ someFn b
+
+
+
+
+getOlder p = person ..p (p.age + 1)
+
+person name isAwesome age = 
+  name     ` name
+  isAwesome` isAwesome
+  age      ` age
+  getOlder ` getOlder self
+
+Kyle      ⟵ person 'Zucker' T 1000
+olderKyle ⟵ Kyle.isAwesome ⟷ Kyle.getOlder
+  
+
+composeKey key keyword secret = 
+  | space ≥ #key ⟶ composeKey (key +             keyWord)  keyWord secret
+  | space ≠ 0    ⟶ composeKey (key + (take space keyWord)) keyWord secret
+  | key
+  : space ⟵ #passPhrase - #key
+
+- #aaaaaaaaaaaaa = 13
+aaaaaaaaaaaaa ⟵ composeKey '' 'aaaa' 'thisisastring'
+
+
+find val arr = { i | a i ∈ A, a = val }
+
+a ⟵ 'abcdefghijklmnopqrstuvwxyz'
+solution s p = ((k c i: (f k[i] ⌀ a)[f c]) (#s ρ p)) / s 
+  : f c = find c a
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#secret ρ 'aaaa'
+∇
+↑
+↓
+
+\log
