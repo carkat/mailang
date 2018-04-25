@@ -1,0 +1,105 @@
+- a comment
+num   ⟵ 5
+float ⟵ 5.5
+A     ⟵ 1 2 3
+B     ⟵ 2 3 4
+D     ⟵ a`A b`num c`6
+
+emptyA ⟵ []
+emptyD ⟵ {}
+
+multiLineA ⟵ 
+    1 2 3
+    4 5 6
+
+nestedA ⟵
+    1 2 3 ; 1 2 3
+
+multiDimA ⟵
+   (1 2 3) (1 2 3); (1 2 3) (1 2 ( 1 2 3))
+
+multiLinD ⟵
+    a`A
+    b`num
+    c`6
+
+truthTable ⟵
+    true   ` T
+    false  ` F
+    isTrue `¬F
+    isFalse`¬T
+    and    ` T & T
+    or     ` T ⋁ T
+    iff    ` T & T ⟷ T
+    xor    ` F & T ⨁ T
+
+- functionName arg1 arg2 = body
+add a b = a + b
+sub a b = a - b
+sum a b = Σ a b 
+sums A  = Σ A
+
+- anonymous function syntax
+- name ⟵ arg1 arg2...: body
+fn ⟵ a b: a + b
+
+
+- the first | is read "gif'
+- the second | is read "gelse if'
+conditionalFunction a b = 
+    | true  ⟵ true
+    | true  
+    & true  ⟵ true
+    | false   
+    ⋁ true  ⟵ true
+    | (
+        longTrueVariable 
+        & reallyLongTrueVariableName
+      ) ⟵ true
+    | default
+    : true    ⟵ T
+      false   ⟵ F
+      default ⟵ F
+      longTrueVariable ⟵ true
+      reallyLongTrueVariableName ⟵ true
+
+
+- collection operations
+union        A B = A ⋃ B
+disjoint     A B = A ⋂ B
+includes     A B = A ⊂ B
+includesOrEq A B = A ⊆ B
+equalSet     A B = A = B
+
+
+- if you need persistent variables in function scope
+- : is read "where"
+sums2 A = Σ B
+    : B ⟵ filter (n: (n % 2) = 0) A
+
+sums3 A = Σ B
+    : B ⟵ filter (n i C: n < C(i + 1)) A
+
+
+
+- ∈ is the iteration operator
+- by default ∈ produces a few arguments
+- (tuple of values) index ∈ Array
+- { (the value to return) | interation, bool, bool, bool...}
+setBuilder  A = { a | a ∈ A }
+filter   fn A = { a | a ∈ A, fn a }
+map      fn A = { fn a | a ∈ A }
+
+
+- TODO: figure out how to do reduction to a single val
+- does for all work?
+reduce fn A = result
+    : result = ∀ (a b) ∈ A | fn a b
+
+- T or F
+exists   val A = ∃ a ∈ A | a = val
+eachTrue val A = ∀ a ∈ A | a < 5
+
+uniqueSet   A = { a | a ∈ A, ¬exists a B }
+    : B ⟵ []
+

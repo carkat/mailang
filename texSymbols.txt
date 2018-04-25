@@ -1,0 +1,17 @@
+//parseMe
+{
+    "gforall": "∀",
+    "gexists": "∃",
+    "gneg"   : "¬",
+    "gin"    : "∈",
+    "grightA": "⟶",
+    "gleftA": "⟵",
+    "union" : "⋃", 
+    "disjoint": "⋂",
+    "subsetNeq": "⊂",
+    "properSubs": "⊆",
+    "Sigma": "Σ",
+    "negation": "¬",
+    "iff": "⟷",
+    "xor": "⨁"
+}
