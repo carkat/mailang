@@ -91,72 +91,51 @@ sums3 A = Σ B
     : B ← filter (n i C: n < C(i + 1)) A
 
 
+
+
 - ∈ is the iteration operator
 - by default ∈ produces a few arguments
 - (tuple of values) index ∈ Array
-- { (the value to return) | iteration, bool, bool, bool...}
-setBuilder               A = { a | a ∈ A }
-setBuilderWithIterators  A = { a + b + c | (a b c) a i ∈ A }
+- { (the value to return) | interation, bool, bool, bool...}
+- not wrapped in {} returns a single value
+- identity set builder
+setBuilder A = { a | a ∈ A }
 
-filter   fn A = { a | a i ∈ A, fn a i A}
-map      fn A = { fn a | a ∈ A }
+- execution of a function on the right returns a if fn a
+filter   fn  A = { a | a ∈ A , fn a }
 
+- execution of a function on the left of | returns a mapped value
+map fn  A = { fn a | a ∈ A }
 
-- TODO: figure out how to do reduction to a single val
-- does for all work?
-reduce A fn = Σ A
+- forall asserts that every value in A consides with some truth statement
+- returns T or F
+- written much like for x in A: x != 0
+every fn A = ∀ a ∈ A, fn a
 
-- T or F
-exists      val A = ∃ a ∈ A | a = val
-eachTrue boolFn A = ∀ a ∈ A | boolFn a
+- ∃ is an array operator that when applied asserts a single value must be matched
+- and that it a single value will be returned, stopping execution of the loop
+includes val A = a | ∃ a ∈ A, a = val
 
-uniqueSet   A = { a | a ∈ A, ¬exists a B }
+- 𝚤 is the index of an array when ∈ is used
+indexOf  val A =   𝚤 | ∃ a 𝚤 ∈ A , a = val
+indexOfs fn  A = { 𝚤 |   a 𝚤 ∈ A , a = val }
+locate   fn  A =   𝚤 | ∃ a 𝚤 ∈ A , fn a
+loci     fn  A = { 𝚤 |   a 𝚤 ∈ A , fn a }
+
+reduce   fn  A = Σ A fn
+uniqueSet    A = { B + a | a ∈ A, ¬exists a B }
     : B ← []
 
 
-fn a b = add a b ⟶ sub a ⟶ add _ a ⟶ someFn b
+solution x y = map (mapped κ) x
+  : κ ← #x ρ y
+    α ← 'abcdefghijklmnopqrstuvwxyz
+    fn κ char 𝚤 = α[(k[𝚤] ια + char ια % #α) % #α] 
 
+f a b c ← 
+  | a < b      → a + b + c 
+  | a > b < c  → a + b - c 
+  | a < b
+  & a = 2b > b + c → 3a + 2b
 
-
-
-getOlder p = person ..p (p.age + 1)
-
-person name isAwesome age = 
-  name     ` name
-  isAwesome` isAwesome
-  age      ` age
-  getOlder ` getOlder self
-
-Kyle      ← person 'Zucker' T 1000
-olderKyle ← Kyle.isAwesome ⟷ Kyle.getOlder
-  
-
-
-
-find val arr = { i | a i ∈ A, a = val }
-
-solution s p = map (k c i: a[(k[i]ιa + cιa) % #a])(#s ρ p) s
-: a ← 'abcdefghijklmnopqrstuvwxyz'
-
-
-
-findIndexIn ← ι
-reshape     ← ρ
-countOf     ← #
-mod         ← %
-where       ← :
-is          ← \←
-solution secret pass = map nCrypt secret
-  where alpha  is 'abcdefghijklmnopqrstuvwxyz'
-  where key    is countOf secret reshape passPhrase
-  where getInd is char: char findIndexIn alpha
-  where nCrypt is (key char index: alpha[(getInd k + getInd c) mod countOf a])(key)
-
-
-
-#secret ρ 'aaaa'
-∇
-↑
-↓
-
-\log
+        

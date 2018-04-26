@@ -4,8 +4,8 @@
     "gexists": "∃",
     "gneg"   : "¬",
     "gin"    : "∈",
-    "grightA": "⟶",
-    "gleftA": "⟵",
+    "grightA": "→",
+    "gleftA": "←",
     "union" : "⋃", 
     "disjoint": "⋂",
     "subsetNeq": "⊂",
@@ -14,4 +14,130 @@
     "negation": "¬",
     "iff": "⟷",
     "xor": "⨁"
+}
+//parseMe
+{
+    "∀":{
+      "collections": {
+        "array": {
+
+        },
+        "dict" : {
+
+        }
+      }
+    },
+    "∃":{
+      "collections": {
+        "array": {
+
+        },
+        "dict" : {
+
+        }
+      }
+    },
+    "∈":{
+    },
+    "¬":{
+      "collections": {
+        "array": {
+
+        },
+        "dict" : {
+
+        }
+      },
+      "numbers": {
+        "boolean": {},
+        "whole": {},
+        "float": {},
+      },
+    },
+    "→":{
+      "functions": {
+
+      },
+      "numbers": {
+        "boolean": {},
+      },
+    },
+    "←":{
+      "assignment": true
+    },
+    "⋃":{
+      "collections": {
+        "array": {
+
+        },
+        "dict" : {
+
+        }
+      },
+    }, 
+    "⋂":{
+      "collections": {
+        "array": {
+
+        },
+        "dict" : {
+
+        }
+      },
+    },
+    "⊂":{
+      "collections": {
+        "array": {
+
+        },
+        "dict" : {
+
+        }
+      },
+    },
+    "⊆":{
+      "collections": {
+        "array": {
+
+        },
+        "dict" : {
+
+        }
+      },
+    },
+    "Σ":{
+      "collections": {
+        "array": {
+
+        },
+        "dict" : {
+
+        }
+      },
+    },
+    "↔":{
+    },
+    "ι"{
+      "collections": {
+        "array": {
+
+        },
+        "dict" : {
+
+        }
+      },
+      "numbers": {
+        "whole": {
+
+        },
+      }
+    },
+    "⨁":{
+      "numbers": {
+        "boolean": {
+
+        },
+      }
+
+    }
 }
