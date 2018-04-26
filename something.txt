@@ -89,6 +89,7 @@ sums3 A = Σ B
 setBuilder  A = { a | a ∈ A }
 filter   fn A = { a | a ∈ A, fn a }
 map      fn A = { fn a | a ∈ A }
+find    val A = val @ A
 
 
 - TODO: figure out how to do reduction to a single val
@@ -97,9 +98,19 @@ reduce fn A = result
     : result = ∀ (a b) ∈ A | fn a b
 
 - T or F
-exists   val A = ∃ a ∈ A | a = val
-eachTrue val A = ∀ a ∈ A | a < 5
+exists   val A = a | ∃ a ∈ A , a = val
+indexOf  val A = i | ∃ (a i) ∈ A , a = val
+eachTrue val A = a | ∀ a ∈ A , a < 5
 
 uniqueSet   A = { a | a ∈ A, ¬exists a B }
     : B ⟵ []
+
+
+
+solution s p = map s (k c i: nCrypt c k[i])(#s ρ p)
+  : α ⟵ 'abcdefghijklmnopqrstuvwxyz
+  : f c = find c α
+  : nCrypt s k = (f k ⌀ α)[f s]
+
+
 

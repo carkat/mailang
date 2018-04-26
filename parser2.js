@@ -99,5 +99,15 @@ const parseCode = code => {
 
 const file = fs.readFileSync('./test.m', 'UTF-8')
 parseCode(parseFile(file))
-// console.log(parseFile(file))
 
+function rotate(num, arr,n=num%arr.length) {
+  return arr.map((value, index, array) => {
+    const rotationValue = index + n < array.length
+      ? index + n
+      : (index - array.length) + n
+
+      return rotationValue < array.length
+        ? array[rotationValue] 
+        : array[0]
+  })
+}
