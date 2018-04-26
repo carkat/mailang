@@ -23,7 +23,7 @@ const product   = arr => arr.reduce((a, b) => a * b)
 const take = (num, arr) => {
   const n     = Math.abs(num)
   const len   = arr.length
-  const nWholeArrays = Math.ceil(len / n)
+  const nWholeArrays = Math.floor(n/len)
 
   const taker = a => iota(nWholeArrays).map(x => a)
     .reduce((x,y) => x.concat(y))
@@ -58,8 +58,17 @@ const rho = (shape, arr) => {
   return rhoLoop(shape, arr, all)
 }
 
+var solution = (secret, passPhrase) => {
+  const a = 'abcdefghijklmnopqrstuvwxyz'
+  const key = rho([secret.length], passPhrase)
+  return secret.map((char, i) => {
+    const kChar                  = key[i]
+    const alphabetIndexOfChar    = a.indexOf(char)
+    const alphabetIndexOfKeyChar = a.indexOf(kChar)
+    const rotated                = alphabetIndexOfChar + alphabetIndexOfKeyChar
+    const mapToLengthAlphabet    = rotated % a.length
+    return a[mapToLengthAlphabet]
+  })
+ }
 
-
-// console.log(rho([3,2,5], [1,2,3,4]))
-console.log(take(-1, iota(10)))
-console.log(rho([10,2,5], iota(10)))
+ console.log(solution('thepackagehasbeendelivered'.split(''), 'snitch'.split('')))

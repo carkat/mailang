@@ -145,20 +145,22 @@ aaaaaaaaaaaaa ⟵ composeKey '' 'aaaa' 'thisisastring'
 
 find val arr = { i | a i ∈ A, a = val }
 
-a ⟵ 'abcdefghijklmnopqrstuvwxyz'
-solution s p = ((k c i: (f k[i] ⌀ a)[f c]) (#s ρ p)) / s 
-  : f c = find c a
+solution s p = map (k c i: a[(k[i]ιa + cιa) % #a])(#s ρ p) s
+: a ⟵ 'abcdefghijklmnopqrstuvwxyz'
 
 
 
-
-
-
-
-
-
-
-
+findIndexIn ⟵ ι
+reshape     ⟵ ρ
+countOf     ⟵ #
+mod         ⟵ %
+where       ⟵ :
+is          ⟵ \⟵
+solution secret pass = map nCrypt secret
+  where alpha  is 'abcdefghijklmnopqrstuvwxyz'
+  where key    is countOf secret reshape passPhrase
+  where getInd is char: char findIndexIn alpha
+  where nCrypt is (key char index: alpha[(getInd k + getInd c) mod countOf a])(key)
 
 
 

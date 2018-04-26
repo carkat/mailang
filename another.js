@@ -48,3 +48,10 @@ const globalOperators = {
     , each: '..', 
   }
 }
+
+var solution = (secret, passPhrase) => {
+  const a = 'abcdefghijklmnopqrstuvwxyz'
+return secret.split('').map(((k,char,i) => {
+     return a[(a.indexOf(char) + a.indexOf(k[i])) % a.length]
+  })(rho(secret.length, passPhrase.split(''))))
+}
