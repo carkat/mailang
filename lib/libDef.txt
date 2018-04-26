@@ -1,4 +1,3 @@
-//parseMe
 {
     "[]": {
       "scope": "A,D",
@@ -11,7 +10,7 @@
     "()": {
       "scope": "X",
       "def": "priorityGrouping"
-    }
+    },
     "`": {
       "scope": "D",
       "def": "key/val"
@@ -24,7 +23,7 @@
       "scope": "A,n",
       "def": "indexOf,nList"
     },
-    "𝚤" :{
+    "î" :{
       "scope": "It",
       "def": "index"
     },
@@ -116,9 +115,13 @@
       "scope": "N",
       "def": "greaterThan"
     }, 
+    "+": {
+      "scope": "N,A",
+      "def": "addition,push/append/concat"
+    },
     "-": {
-      "scope": "N",
-      "def": "subtract"
+      "scope": "N,A",
+      "def": "subtract,removeAll"
     }, 
     "/": {
       "scope": "N,A",
@@ -148,7 +151,7 @@
       "scope": "A,D",
       "def": "flatten,flatten"
     },
-    ":"{
+    ":": {
       "scope": "fn,lambda",
       "def": "where,where/assign"
     }

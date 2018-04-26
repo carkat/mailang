@@ -11,34 +11,34 @@ emptyArr ← []
 emptyDict ← {}
 
 multiLineArr ← 
-    1 2 3
-    4 5 6
+  1 2 3
+  4 5 6
 
 nestedArr ←
-    1 2 3 ; 1 2 3
+  1 2 3 ; 1 2 3
 
 multiDimArr ←
-   (1 2 3) (1 2 3); (1 2 3) (1 2 ( 1 2 3))
+  (1 2 3) (1 2 3); (1 2 3) (1 2 ( 1 2 3))
    
 multiLinDict ←
+  a`A
+  b`num
+  c`6
+  nestedDict`
     a`A
     b`num
     c`6
-    nestedDict`
-      a`A
-      b`num
-      c`6
 
 - iff also works as a function continuation 
 truthTable ←
-    true   ` T
-    false  ` F
-    isTrue `¬F
-    isFalse`¬T
-    and    ` T & T
-    or     ` T ⋁ T
-    iff    ` T & T ⟷ T
-    xor    ` F & T ⨁ T
+  true   ` T
+  false  ` F
+  isTrue `¬F
+  isFalse`¬T
+  and    ` T & T
+  or     ` T ⋁ T
+  iff    ` T & T ⟷ T
+  xor    ` F & T ⨁ T
 
 - functionName arg1 arg2 = body
 add a b = a + b
@@ -54,21 +54,19 @@ fn ← a b: a + b
 - the first | is read "if'
 - the second | is read "else if'
 conditionalFunction a b = 
-    | true  → true
-    | true  
-    & true  → true
-    | false   
-    ⋁ true  → true
-    | (
-        longTrueVariable 
-        & reallyLongTrueVariableName
-      ) ← true
-    | default
-    : true    ← T
-      false   ← F
-      default ← F
-      longTrueVariable ← true
-      reallyLongTrueVariableName ← true
+  | true  → true
+  | true  
+  & true  → true
+  | false   
+  ⋁ true  → true
+  | (longTrueVariable 
+    & reallyLongTrueVariableName) → true
+  | default
+  : true    ← T
+    false   ← F
+    default ← F
+    longTrueVariable ← true
+    reallyLongTrueVariableName ← true
 
 
 - collection operations
@@ -102,10 +100,10 @@ sums3 A = Σ B
 setBuilder A = { a | a ∈ A }
 
 - execution of a function on the right returns a if fn a
-filter   fn  A = { a | a ∈ A , fn a }
+filter   fn  A = { a | a i ∈ A , fn a i A}
 
 - execution of a function on the left of | returns a mapped value
-map fn  A = { fn a | a ∈ A }
+map fn  A = { fn a i A | a i ∈ A }
 
 - forall asserts that every value in A consides with some truth statement
 - returns T or F
@@ -116,11 +114,12 @@ every fn A = ∀ a ∈ A, fn a
 - and that it a single value will be returned, stopping execution of the loop
 includes val A = a | ∃ a ∈ A, a = val
 
-- 𝚤 is the index of an array when ∈ is used
-indexOf  val A =   𝚤 | ∃ a 𝚤 ∈ A , a = val
-indexOfs fn  A = { 𝚤 |   a 𝚤 ∈ A , a = val }
-locate   fn  A =   𝚤 | ∃ a 𝚤 ∈ A , fn a
-loci     fn  A = { 𝚤 |   a 𝚤 ∈ A , fn a }
+- i,j,k is the index of an array when ∈ is used
+- they can be named anything
+indexOf  val A =   i | ∃ a i ∈ A , a = val
+indexOfs fn  A = { i |   a i ∈ A , a = val }
+locate   fn  A =   i | ∃ a i ∈ A , fn a
+loci     fn  A = { i |   a i ∈ A , fn a }
 
 reduce   fn  A = Σ A fn
 uniqueSet    A = { B + a | a ∈ A, ¬exists a B }
@@ -130,7 +129,7 @@ uniqueSet    A = { B + a | a ∈ A, ¬exists a B }
 solution x y = map (mapped κ) x
   : κ ← #x ρ y
     α ← 'abcdefghijklmnopqrstuvwxyz
-    fn κ char 𝚤 = α[(k[𝚤] ια + char ια % #α) % #α] 
+    fn κ char i = α[(k[i] ια + char ια % #α) % #α] 
 
 f a b c =
   | a < b      → a + b + c 
