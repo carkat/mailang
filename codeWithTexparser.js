@@ -58,17 +58,18 @@ const rho = (shape, arr) => {
   return rhoLoop(shape, arr, all)
 }
 
-var solution = (secret, passPhrase) => {
+var solution = (secret, passPhrase, enc) => {
   const a = 'abcdefghijklmnopqrstuvwxyz'
   const key = rho([secret.length], passPhrase)
   return secret.map((char, i) => {
     const kChar                  = key[i]
     const alphabetIndexOfChar    = a.indexOf(char)
     const alphabetIndexOfKeyChar = a.indexOf(kChar)
-    const rotated                = alphabetIndexOfChar + alphabetIndexOfKeyChar
+    let rotated                  = enc?alphabetIndexOfChar + alphabetIndexOfKeyChar:alphabetIndexOfChar - alphabetIndexOfKeyChar
+    while(rotated < 0) rotated  += a.length
     const mapToLengthAlphabet    = rotated % a.length
     return a[mapToLengthAlphabet]
-  })
+  }).join('')
  }
 
- console.log(solution('thepackagehasbeendelivered'.split(''), 'snitch'.split('')))
+ console.log(solution('klatrgafedvtssdwywcyty'.split(''), 'cloak'.split('')))

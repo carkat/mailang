@@ -1,26 +1,26 @@
 - a comment
-num   ⟵ 5
-float ⟵ 5.5
-A     ⟵ 1 2 3
-B     ⟵ 2 3 4
-D     ⟵ a`A b`num c`6
+num   ← 5
+float ← 5.5
+A     ← 1 2 3
+B     ← 2 3 4
+D     ← a`A b`num c`6
 
-emptyArr ⟵ []
+emptyArr ← []
 
 - also empty obj
-emptyDict ⟵ {}
+emptyDict ← {}
 
-multiLineArr ⟵ 
+multiLineArr ← 
     1 2 3
     4 5 6
 
-nestedArr ⟵
+nestedArr ←
     1 2 3 ; 1 2 3
 
-multiDimArr ⟵
+multiDimArr ←
    (1 2 3) (1 2 3); (1 2 3) (1 2 ( 1 2 3))
 
-multiLinDict ⟵
+multiLinDict ←
     a`A
     b`num
     c`6
@@ -30,7 +30,7 @@ multiLinDict ⟵
       c`6
 
 - iff also works as a function continuation 
-truthTable ⟵
+truthTable ←
     true   ` T
     false  ` F
     isTrue `¬F
@@ -47,28 +47,28 @@ sum a b = Σ a b
 sums A  = Σ A
 
 - anonymous function syntax
-- name ⟵ arg1 arg2...: body
-fn ⟵ a b: a + b
+- name ← arg1 arg2...: body
+fn ← a b: a + b
 
 
 - the first | is read "if'
 - the second | is read "else if'
 conditionalFunction a b = 
-    | true  ⟵ true
+    | true  → true
     | true  
-    & true  ⟵ true
+    & true  → true
     | false   
-    ⋁ true  ⟵ true
+    ⋁ true  → true
     | (
         longTrueVariable 
         & reallyLongTrueVariableName
-      ) ⟵ true
+      ) ← true
     | default
-    : true    ⟵ T
-      false   ⟵ F
-      default ⟵ F
-      longTrueVariable ⟵ true
-      reallyLongTrueVariableName ⟵ true
+    : true    ← T
+      false   ← F
+      default ← F
+      longTrueVariable ← true
+      reallyLongTrueVariableName ← true
 
 
 - collection operations
@@ -85,11 +85,10 @@ remove A B = A - B
 - if you need persistent variables in function scope
 - : is read "where"
 sums2 A = Σ B
-    : B ⟵ filter (n: (n % 2) = 0) A
+    : B ← filter (n: (n % 2) = 0) A
 
 sums3 A = Σ B
-    : B ⟵ filter (n i C: n < C(i + 1)) A
-
+    : B ← filter (n i C: n < C(i + 1)) A
 
 
 - ∈ is the iteration operator
@@ -105,15 +104,14 @@ map      fn A = { fn a | a ∈ A }
 
 - TODO: figure out how to do reduction to a single val
 - does for all work?
-reduce fn A = result
-    : result = ∀ (a b) ∈ A | fn a b
+reduce A fn = Σ A
 
 - T or F
 exists      val A = ∃ a ∈ A | a = val
 eachTrue boolFn A = ∀ a ∈ A | boolFn a
 
 uniqueSet   A = { a | a ∈ A, ¬exists a B }
-    : B ⟵ []
+    : B ← []
 
 
 fn a b = add a b ⟶ sub a ⟶ add _ a ⟶ someFn b
@@ -129,33 +127,25 @@ person name isAwesome age =
   age      ` age
   getOlder ` getOlder self
 
-Kyle      ⟵ person 'Zucker' T 1000
-olderKyle ⟵ Kyle.isAwesome ⟷ Kyle.getOlder
+Kyle      ← person 'Zucker' T 1000
+olderKyle ← Kyle.isAwesome ⟷ Kyle.getOlder
   
 
-composeKey key keyword secret = 
-  | space ≥ #key ⟶ composeKey (key +             keyWord)  keyWord secret
-  | space ≠ 0    ⟶ composeKey (key + (take space keyWord)) keyWord secret
-  | key
-  : space ⟵ #passPhrase - #key
-
-- #aaaaaaaaaaaaa = 13
-aaaaaaaaaaaaa ⟵ composeKey '' 'aaaa' 'thisisastring'
 
 
 find val arr = { i | a i ∈ A, a = val }
 
 solution s p = map (k c i: a[(k[i]ιa + cιa) % #a])(#s ρ p) s
-: a ⟵ 'abcdefghijklmnopqrstuvwxyz'
+: a ← 'abcdefghijklmnopqrstuvwxyz'
 
 
 
-findIndexIn ⟵ ι
-reshape     ⟵ ρ
-countOf     ⟵ #
-mod         ⟵ %
-where       ⟵ :
-is          ⟵ \⟵
+findIndexIn ← ι
+reshape     ← ρ
+countOf     ← #
+mod         ← %
+where       ← :
+is          ← \←
 solution secret pass = map nCrypt secret
   where alpha  is 'abcdefghijklmnopqrstuvwxyz'
   where key    is countOf secret reshape passPhrase

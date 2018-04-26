@@ -47,14 +47,3 @@ const rho = (shape, arr) => {
 }
 
 
-// const cipher = Object.assign({}, ...file.split('\r\n').map(ln => {
-//     const [key, val] = ln.toLowerCase().trim().split(' ')
-//     return val instanceof Array || val instanceof 'object' => {[key]: val}
-//   }))
-
-// console.log(cipher)
-// const secret = 'abcdefghijklmnopqrstuvwxyz'
-// const cipher = 'aaaa'
-// const result = take(count(secret), cipher)
-// console.log(result, count(secret),secret.length, count(result), result.length)
-
