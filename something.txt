@@ -82,34 +82,32 @@ sums3 A = Σ B
 
 
 
+
+
 - ∈ is the iteration operator
 - by default ∈ produces a few arguments
 - (tuple of values) index ∈ Array
 - { (the value to return) | interation, bool, bool, bool...}
-setBuilder  A = { a | a ∈ A }
-filter   fn A = { a | a ∈ A, fn a }
-map      fn A = { fn a | a ∈ A }
 
+- not wrapped in {} returns a single value
+setBuilder   A = { a |   a ∈ A }
+filter   fn  A = { a |   a   ∈ A , fn a }
+every    fn  A =   a | ∀ a   ∈ A , fn a
+includes val A =   a | ∃ a   ∈ A , a = val
+indexOf  val A =   i | ∃ a i ∈ A , a = val
+locate   fn  A =   i | ∃ a i ∈ A , fn a
+loci     fn  A = { i |   a i ∈ A , fn a }
 
-- TODO: figure out how to do reduction to a single val
-- does for all work?
-reduce fn A = result
-    : result = ∀ (a b) ∈ A | fn a b
-
-- T or F
-exists   val A = a | ∃ a ∈ A , a = val
-indexOf  val A = i | ∃ (a i) ∈ A , a = val
-eachTrue val A = a | ∀ a ∈ A , a < 5
-locate   fn A =  i | @ a i ∈ A, fn a
-loci     fn A = {i | @@ a i ∈ A, fn a }
-
-uniqueSet   A = { B + a | a ∈ A, ¬exists a B }
+reduce   fn  A = Σ A fn
+map      fn  A = { fn a  | a ∈ A }
+uniqueSet    A = { B + a | a ∈ A, ¬exists a B }
     : B ⟵ []
+
 
 α ⟵ 'abcdefghijklmnopqrstuvwxyz
 
 solution s p = map s (k c i: nCrypt c k[i])(#s ρ p)
-  : nCrypt s k = (locate s ⌀ α)[locate g]
+  : nCrypt s k = ((indexOf s) ⌀ α)[indexOf g]
   : locate c = find c α
 
 
