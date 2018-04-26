@@ -73,3 +73,4 @@ var solution = (secret, passPhrase, enc) => {
  }
 
  console.log(solution('klatrgafedvtssdwywcyty'.split(''), 'cloak'.split('')))
+

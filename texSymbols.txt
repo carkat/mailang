@@ -1,143 +1,155 @@
 //parseMe
 {
-    "gforall": "∀",
-    "gexists": "∃",
-    "gneg"   : "¬",
-    "gin"    : "∈",
-    "grightA": "→",
-    "gleftA": "←",
-    "union" : "⋃", 
-    "disjoint": "⋂",
-    "subsetNeq": "⊂",
-    "properSubs": "⊆",
-    "Sigma": "Σ",
-    "negation": "¬",
-    "iff": "⟷",
-    "xor": "⨁"
-}
-//parseMe
-{
+    "[]": {
+      "scope": "A,D",
+      "def": "index/emptySet,[index]"
+    },
+    "{}": {
+      "scope": "D,It",
+      "def": "emptySet,comprehension"
+    },
+    "()": {
+      "scope": "X",
+      "def": "priorityGrouping"
+    }
+    "`": {
+      "scope": "D",
+      "def": "key/val"
+    },
     "∀":{
-      "collections": {
-        "array": {
-
-        },
-        "dict" : {
-
-        }
-      }
+      "scope": "A,It",
+      "def": "forall"
     },
-    "∃":{
-      "collections": {
-        "array": {
-
-        },
-        "dict" : {
-
-        }
-      }
+    "ι": {
+      "scope": "A,n",
+      "def": "indexOf,nList"
     },
-    "∈":{
+    "𝚤" :{
+      "scope": "It",
+      "def": "index"
     },
-    "¬":{
-      "collections": {
-        "array": {
-
-        },
-        "dict" : {
-
-        }
-      },
-      "numbers": {
-        "boolean": {},
-        "whole": {},
-        "float": {},
-      },
+    "∃": {
+      "scope": "It",
+      "def": "exists"
     },
-    "→":{
-      "functions": {
-
-      },
-      "numbers": {
-        "boolean": {},
-      },
+    "∈": {
+      "scope": "A",
+      "def": "in"
     },
-    "←":{
-      "assignment": true
-    },
-    "⋃":{
-      "collections": {
-        "array": {
-
-        },
-        "dict" : {
-
-        }
-      },
+    "→": {
+      "scope": "fn,B",
+      "def": "return,then"
     }, 
-    "⋂":{
-      "collections": {
-        "array": {
-
-        },
-        "dict" : {
-
-        }
-      },
+    "↑": {
+      "scope": "A,n",
+      "def": "sort,take"
+    }, 
+    "↓": {
+      "scope": "A,n",
+      "def": "drop"
+    }, 
+    "↻": {
+      "scope": "A,n",
+      "def": "rotate"
+    }, 
+    "⌊": {
+      "scope": "A",
+      "def": "min"
+    }, 
+    "⌈": {
+      "scope": "A",
+      "def": "max"
+    }, 
+    "#": {
+      "scope": "A",
+      "def": "count"
     },
-    "⊂":{
-      "collections": {
-        "array": {
-
-        },
-        "dict" : {
-
-        }
-      },
+    ".": {
+      "scope": "A",
+      "def": "dotProduct"
     },
-    "⊆":{
-      "collections": {
-        "array": {
-
-        },
-        "dict" : {
-
-        }
-      },
+    "Σ": {
+      "scope": "A,It",
+      "def": "reduce"
+    }, 
+    "←": {
+      "scope": "Var",
+      "def": "assignment"
     },
-    "Σ":{
-      "collections": {
-        "array": {
-
-        },
-        "dict" : {
-
-        }
-      },
+    "⋃": {
+      "scope": "A",
+      "def": "join"
+    }, 
+    "⋂": {
+      "scope": "A",
+      "def": "disjoint"
     },
-    "↔":{
+    "⊂": {
+      "scope": "A",
+      "def": "properSubset"
     },
-    "ι"{
-      "collections": {
-        "array": {
-
-        },
-        "dict" : {
-
-        }
-      },
-      "numbers": {
-        "whole": {
-
-        },
-      }
+    "⊆": {
+      "scope": "A",
+      "def": "supsetOrEq"
     },
-    "⨁":{
-      "numbers": {
-        "boolean": {
-
-        },
-      }
-
+    "¬": {
+      "scope": "A,B,N",
+      "def": "reverse,not,negative"
+    },
+    "⋁": {
+      "scope": "B",
+      "def": "or"
+    }, 
+    "&": {
+      "scope": "B",
+      "def": "and"
+    }, 
+    "÷": {
+      "scope": "n",
+      "def": "whole number division"
+    }, 
+    "<": {
+      "scope": "N",
+      "def": "lessthan"
+    }, 
+    ">": {
+      "scope": "N",
+      "def": "greaterThan"
+    }, 
+    "-": {
+      "scope": "N",
+      "def": "subtract"
+    }, 
+    "/": {
+      "scope": "N,A",
+      "def": "floating point divide,map"
+    }, 
+    "//": {
+      "scope": "N",
+      "def": "modulo"
+    },
+    "⟷": {
+      "scope": "B,fn",
+      "def": "iff,continuation"
+    },
+    "|": {
+      "scope": "fn,It,A",
+      "def": "guard,returnVal"
+    },
+    "⨁": {
+      "scope": "B,fn",
+      "def": "xor,discontinuation"
+    },
+    "_":{
+      "scope": "fn,A",
+      "def": "curryDuringInvocation,limitVals"
+    },
+    "...": {
+      "scope": "A,D",
+      "def": "flatten,flatten"
+    },
+    ":"{
+      "scope": "fn,lambda",
+      "def": "where,where/assign"
     }
 }

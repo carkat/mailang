@@ -19,7 +19,7 @@ nestedArr ←
 
 multiDimArr ←
    (1 2 3) (1 2 3); (1 2 3) (1 2 ( 1 2 3))
-
+   
 multiLinDict ←
     a`A
     b`num
@@ -132,10 +132,10 @@ solution x y = map (mapped κ) x
     α ← 'abcdefghijklmnopqrstuvwxyz
     fn κ char 𝚤 = α[(k[𝚤] ια + char ια % #α) % #α] 
 
-f a b c ← 
+f a b c =
   | a < b      → a + b + c 
   | a > b < c  → a + b - c 
   | a < b
-  & a = 2b > b + c → 3a + 2b
+  & a > b + c → 2ab ÷ 3
 
         

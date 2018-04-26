@@ -8,7 +8,7 @@ const rotate = (num, arr,n=num%arr.length) =>
         ? a[j] 
         : a[0]
   })
-const add = (a, b) => a + b
+const add       = (a, b) => a + b
 const exists    = (val, arr) => arr.includes(val)
 const locate    = (val, arr) => arr.findIndex(x => x === val)
 const locateAll = (val, arr) => arr.map((x,i) => x === val && i).filter(x=>x)
