@@ -147,12 +147,16 @@
       "scope": "fn,A",
       "def": "curryDuringInvocation,limitVals"
     },
+    "=": {
+      "scope": "fn,B",
+      "def": "assignment,equality"
+    },
     "...": {
       "scope": "A,D",
       "def": "flatten,flatten"
     },
     ":": {
       "scope": "fn,lambda",
-      "def": "where,where/assign"
+      "def": "where,where/body"
     }
 }

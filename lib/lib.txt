@@ -48,7 +48,7 @@ sums A  = Σ A
 
 - anonymous function syntax
 - name ← arg1 arg2...: body
-fn ← a b: a + b
+f ← a b: a + b
 
 
 - the first | is read "if'
@@ -83,10 +83,10 @@ remove A B = A - B
 - if you need persistent variables in function scope
 - : is read "where"
 sums2 A = Σ B
-    : B ← filter (n: (n % 2) = 0) A
+  : B ← filter (n: (n % 2) = 0) A
 
 sums3 A = Σ B
-    : B ← filter (n i C: n < C(i + 1)) A
+  : B ← filter (n i C: n < C(i + 1)) A
 
 
 
@@ -99,16 +99,16 @@ sums3 A = Σ B
 - identity set builder
 setBuilder A = { a | a ∈ A }
 
-- execution of a function on the right returns a if fn a
-filter   fn  A = { a | a i ∈ A , fn a i A}
+- execution of a function on the right returns a if f a
+filter f  A = { a | a i ∈ A , f a i A}
 
 - execution of a function on the left of | returns a mapped value
-map fn  A = { fn a i A | a i ∈ A }
+map f A = { f a i A | a i ∈ A }
 
 - forall asserts that every value in A consides with some truth statement
 - returns T or F
 - written much like for x in A: x != 0
-every fn A = ∀ a ∈ A, fn a
+every f A = ∀ a ∈ A, f a
 
 - ∃ is an array operator that when applied asserts a single value must be matched
 - and that it a single value will be returned, stopping execution of the loop
@@ -117,19 +117,24 @@ includes val A = a | ∃ a ∈ A, a = val
 - i,j,k is the index of an array when ∈ is used
 - they can be named anything
 indexOf  val A =   i | ∃ a i ∈ A , a = val
-indexOfs fn  A = { i |   a i ∈ A , a = val }
-locate   fn  A =   i | ∃ a i ∈ A , fn a
-loci     fn  A = { i |   a i ∈ A , fn a }
+indexOfs f  A = { i |   a i ∈ A , a = val }
+locate   f  A =   i | ∃ a i ∈ A , f a
+loci     f  A = { i |   a i ∈ A , f a }
 
-reduce   fn  A = Σ A fn
+reduce   f  A = Σ A f
 uniqueSet    A = { B + a | a ∈ A, ¬exists a B }
-    : B ← []
+  : B ← []
 
 
 solution x y = map (mapped κ) x
   : κ ← #x ρ y
     α ← 'abcdefghijklmnopqrstuvwxyz
-    fn κ char i = α[(k[i] ια + char ια % #α) % #α] 
+    f κ char i = α[(k[i] ια + char ια % #α) % #α] 
+      : a ← 5
+        b ← 3
+        c ← 4
+    abcd a b = a + b + d c
+      : d c = c * 2
 
 f a b c =
   | a < b      → a + b + c 
