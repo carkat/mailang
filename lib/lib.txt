@@ -18,7 +18,7 @@ nestedArr ←
   1 2 3 ; 1 2 3
 
 multiDimArr ←
-  (1 2 3) (1 2 3); (1 2 3) (1 2 ( 1 2 3))
+  (1 2 3) (1 2 3); (1 2 3) (1 2 (1 2 3))
    
 multiLinDict ←
   a`A
@@ -67,6 +67,7 @@ conditionalFunction a b =
   default ← F
   longTrueVariable ← true
   reallyLongTrueVariableName ← true
+
 
 
 - collection operations
@@ -122,33 +123,25 @@ locate   f  A =   i | ∃ a i ∈ A , f a
 loci     f  A = { i |   a i ∈ A , f a }
 
 reduce   f  A = Σ A f
-uniqueSet    A = { B + a | a ∈ A, ¬exists a B }
+uniqueSet   A = { B + a | a ∈ A, ¬exists a B }
 : B ← []
 
 
 solution x y = map (mapped κ) x
   : κ ← #x ρ y
-    α ← 'abcdefghijklmnopqrstuvwxyz
+    α ← 'abcdefghijklmnopqrstuvwxyz'
     f κ char i = α[(k[i] ια + char ια % #α) % #α] 
-    : abcd a b c d = f * 3 - q
-      : q ← 3
-        f g =  
-        | a*g - r b + (c * d) > 3 → 3
-        | T → 4 
-        : r a = a * 2
-          g  ← 25 * c
-          c  ← 2
-          cd ←
-            1 2 3 
-            2 3 4
-            4 5 6
-    abcd a b = a + b + d c
-    : d c = c * 2
 
 f a b c =
 | a < b      → a + b + c 
 | a > b < c  → a + b - c 
 | a < b
 & a > b + c → 2ab ÷ 3
+
+rotate A n = map (κ n) A 
+: κ num c i A = 
+  | n < #A → A[n]
+  | A[n % #A] 
+  : n ← n + i
 
         
