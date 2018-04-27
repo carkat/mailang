@@ -62,11 +62,11 @@ conditionalFunction a b =
   | (longTrueVariable 
     & reallyLongTrueVariableName) → true
   | default
-  : true    ← T
-    false   ← F
-    default ← F
-    longTrueVariable ← true
-    reallyLongTrueVariableName ← true
+: true    ← T
+  false   ← F
+  default ← F
+  longTrueVariable ← true
+  reallyLongTrueVariableName ← true
 
 
 - collection operations
@@ -83,10 +83,10 @@ remove A B = A - B
 - if you need persistent variables in function scope
 - : is read "where"
 sums2 A = Σ B
-  : B ← filter (n: (n % 2) = 0) A
+: B ← filter (n: (n % 2) = 0) A
 
 sums3 A = Σ B
-  : B ← filter (n i C: n < C(i + 1)) A
+: B ← filter (n i C: n < C(i + 1)) A
 
 
 
@@ -123,25 +123,27 @@ loci     f  A = { i |   a i ∈ A , f a }
 
 reduce   f  A = Σ A f
 uniqueSet    A = { B + a | a ∈ A, ¬exists a B }
-  : B ← []
+: B ← []
 
 
 solution x y = map (mapped κ) x
-: κ ← #x ρ y
-  α ← 'abcdefghijklmnopqrstuvwxyz
-  f κ char i = α[(k[i] ια + char ια % #α) % #α] 
-  : abcd a b c d = f * 3 - q
-    : q ← 3
-      f g =  a*g - r b + (c * d)
-      : r a = a * 2
-        g  ← 25 * c
-        c  ← 2
-        cd ←
-          1 2 3 
-          2 3 4
-          4 5 6
-  abcd a b = a + b + d c
-  : d c = c * 2
+  : κ ← #x ρ y
+    α ← 'abcdefghijklmnopqrstuvwxyz
+    f κ char i = α[(k[i] ια + char ια % #α) % #α] 
+    : abcd a b c d = f * 3 - q
+      : q ← 3
+        f g =  
+        | a*g - r b + (c * d) > 3 → 3
+        | T → 4 
+        : r a = a * 2
+          g  ← 25 * c
+          c  ← 2
+          cd ←
+            1 2 3 
+            2 3 4
+            4 5 6
+    abcd a b = a + b + d c
+    : d c = c * 2
 
 f a b c =
 | a < b      → a + b + c 
