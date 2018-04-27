@@ -127,19 +127,26 @@ uniqueSet    A = { B + a | a ∈ A, ¬exists a B }
 
 
 solution x y = map (mapped κ) x
-  :κ ← #x ρ y
-   α ← 'abcdefghijklmnopqrstuvwxyz
-   f κ char i = α[(k[i] ια + char ια % #α) % #α] 
-     : abcd a b c d = f * 3 - q
-       : q ← 3
-         f ← a - b + (c * d)
-   abcd a b = a + b + d c
-    :d c = c * 2
+: κ ← #x ρ y
+  α ← 'abcdefghijklmnopqrstuvwxyz
+  f κ char i = α[(k[i] ια + char ια % #α) % #α] 
+  : abcd a b c d = f * 3 - q
+    : q ← 3
+      f g =  a*g - r b + (c * d)
+      : r a = a * 2
+        g  ← 25 * c
+        c  ← 2
+        cd ←
+          1 2 3 
+          2 3 4
+          4 5 6
+  abcd a b = a + b + d c
+  : d c = c * 2
 
 f a b c =
-  | a < b      → a + b + c 
-  | a > b < c  → a + b - c 
-  | a < b
-  & a > b + c → 2ab ÷ 3
+| a < b      → a + b + c 
+| a > b < c  → a + b - c 
+| a < b
+& a > b + c → 2ab ÷ 3
 
         
