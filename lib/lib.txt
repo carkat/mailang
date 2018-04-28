@@ -18,7 +18,7 @@ nestedArr ←
   1 2 3 ; 1 2 3
 
 multiDimArr ←
-  (1 2 3) (1 2 3); (1 2 3) (1 2 ( 1 2 3))
+  (1 2 3) (1 2 3); (1 2 3) (1 2 (1 2 3))
    
 multiLinDict ←
   a`A
@@ -62,11 +62,12 @@ conditionalFunction a b =
   | (longTrueVariable 
     & reallyLongTrueVariableName) → true
   | default
-  : true    ← T
-    false   ← F
-    default ← F
-    longTrueVariable ← true
-    reallyLongTrueVariableName ← true
+: true    ← T
+  false   ← F
+  default ← F
+  longTrueVariable ← true
+  reallyLongTrueVariableName ← true
+
 
 
 - collection operations
@@ -83,10 +84,10 @@ remove A B = A - B
 - if you need persistent variables in function scope
 - : is read "where"
 sums2 A = Σ B
-  : B ← filter (n: (n % 2) = 0) A
+: B ← filter (n: (n % 2) = 0) A
 
 sums3 A = Σ B
-  : B ← filter (n i C: n < C(i + 1)) A
+: B ← filter (n i C: n < C(i + 1)) A
 
 
 
@@ -122,24 +123,22 @@ locate   f  A =   i | ∃ a i ∈ A , f a
 loci     f  A = { i |   a i ∈ A , f a }
 
 reduce   f  A = Σ A f
-uniqueSet    A = { B + a | a ∈ A, ¬exists a B }
-  : B ← []
+uniqueSet   A = { B + a | a ∈ A, ¬exists a B }
+: B ← []
 
 
 solution x y = map (mapped κ) x
-  :κ ← #x ρ y
-   α ← 'abcdefghijklmnopqrstuvwxyz
-   f κ char i = α[(k[i] ια + char ια % #α) % #α] 
-     : abcd a b c d = f * 3 - q
-       : q ← 3
-         f ← a - b + (c * d)
-   abcd a b = a + b + d c
-    :d c = c * 2
+  : κ ← #x ρ y
+    α ← 'abcdefghijklmnopqrstuvwxyz'
+    f κ char i = α[(k[i] ια + char ια % #α) % #α] 
 
 f a b c =
-  | a < b      → a + b + c 
-  | a > b < c  → a + b - c 
-  | a < b
-  & a > b + c → 2ab ÷ 3
+| a < b      → a + b + c 
+| a > b < c  → a + b - c 
+| a < b
+& a > b + c  → 2ab ÷ 3
+
+
+rotate A n = { (((n+i) % #A) + #A) % #A | _ i ∈ A } 
 
         
