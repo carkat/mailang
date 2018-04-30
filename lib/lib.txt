@@ -11,8 +11,9 @@ emptyArr ← []
 emptyDict ← {}
 
 multiLineArr ← 
-  1 2 3
-  4 5 6
+  1 2 3 
+  4 5 6 
+  
 
 nestedArr ←
   1 2 3 ; 1 2 3
@@ -139,6 +140,77 @@ f a b c =
 & a > b + c  → 2ab ÷ 3
 
 
-rotate A n = { (((n+i) % #A) + #A) % #A | _ i ∈ A } 
 
-        
+
+map     A fn  = f/A
+filter  A fn  = f|A
+roll    A     =  □A
+deal    A n   = n□A
+indexOf A val = A?val
+findInd A fn  = f?A
+
+first   A val = A@val
+first   A fn  = A@fn
+findAll A fn  = A@@fn
+enlist  A B C = ..A B C
+
+
+
+- A ← 1 2 ; 3 4
+- B ← 1 2 ; 3 4
+concat A B C = [..A B C]
+- (1 2 ; 3 4) (1 2 ; 3 4)
+
+laminate A B C = [A..B..C]
+- 1 2 1 2 ;  
+- 3 4 3 4
+
+union A B = A ⋃ B
+- 1 2 ; 3 4
+
+drop   A d = A↓d
+take   A t = A↑t
+rotate A n = A↻n
+rotate A n = A↑(i-#A) + A↑i 
+  : i ← (n+#A)%#A
+
+typeCheck A = A ≊ 'A'
+
+slice  A t d = take A t → Drop _ d
+slice2 A t d = (A↑t)↓d
+sortedInd  A = ↑A
+sort   A     = A[↑A]
+string ← '
+  a multi line string
+  '
+string2 ← 'a single line string
+
+smallest A = { a | a ∈ A, a < 1↑A } → #_ = 1 → 1↑_ ⊕ f 1↷_
+
+parseBody body = { main where }
+: wSplit ← s ↓body
+  split  ← '\n' ↓body
+  main   ← 1↑splitOnWhere
+  symbol ← ':'
+  where  ← 
+    f firstCharIsSymbol        → 
+    f (firstLineOfWhereBody _) → 
+    (ln: indentlvl _↑ln)    /_ → JoinAndParse
+
+  f fn = fn | split
+  firstCharIsSymbol ln        = 1↑(trim ln) = s
+  firstLineOfWhereBody b x i  = b & (i >= b)
+  indentlvl w                 = (x: x≠' '& notSymbol(x))?w
+
+parseBody body = { main where }
+: symbol       ← ':'
+  splitOnWhere ← symbol ↓body
+  split        ← '\n'   ↓body
+  main         ← 1      ↑splitOnWhere
+  wBegins      ← (x  : 1↑trim x = symbol)|split
+  wBody        ← (x i: wBegins & i >= wBegins)|split
+  indentlvl w  = (x  : x≠' '   & notSymbol(x))?w
+  where        ← (x: (indentlvl wBody)↑x) / wBody → JoinAndParse
+
+
+

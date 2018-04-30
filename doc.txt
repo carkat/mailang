@@ -1,0 +1,142 @@
+Types are defined as follows
+
+x ← generic, any type
+f ← function
+
+O ← ordered
+    C ← collections
+        A ← array
+        D ← dictionary
+        S ← string 
+
+    N ← all number types
+        n ← integers
+        R ← rationals/floats/doubles etc
+            d ← double
+    B ← boolean
+
+All operators are assigned specific behavior derived from the types listed above. 
+Possible operator rules can be derived by each permutation of the following pattern: 
+op T
+T op T
+
+for example:
+
+  ↑A  is sort, while
+n ↑A is an n take of A, read, take n from a
+
+
+The following is the definition of every operator combination: 
+
+Function:
+f:
+  g x → f, function composition, read, f(x) composed g(x)
+  g x will evaluate, and forward the result to the first argument of the next function
+  f(g(x)) or result of g(x) passed to f
+
+  f _ x, currying. 
+    where f is a function with 2 arguments, f x y = x + y
+    g x → f _ x is equivalent to f(g(x), x)
+    for example:
+        add a b = a + b
+        sub a b = a - b
+        result ← sub (add 3 5) 8     returns 0
+
+    inline could be rewritten as
+        add 3 5 → sub _ 8
+
+  (x y: x + y), lambda syntax           map (x: x + 1) /1 2 3 4 = 2 3 4 5
+
+Boolean:
+B:
+ T = true
+ F = false
+
+ | B → x, if/then/else operators
+    if true then x
+    |   T   →    x
+
+Ordered operators:
+O:
+    O < O = T if O is less than O
+        A < A = T when ...
+        D < D if #◖D < #◖D
+        N < N if the number value of N is < N
+        B < B if left B = F and right B = T
+        
+    O > O = T if O is greater than O
+        see <
+    
+    O = O is T when O is equivalent to O
+        C = C, tests deep equivalence
+        N = N if the numerical value of N = N
+        B = B if T = T or F = F
+    
+    O ≠ O, asserts that O is not equal to O
+
+    O & O = T when both Os can be evaluated to T
+        (#A < 5) & (#A % 2 = 0)
+           3 < 5 & 4 > 3
+               T & T
+
+    O ⟷ O, both sides must be true, exclusive & operator, a continuation operator, and nested if
+        similar to the following
+        if(true){
+            if(true){
+                callFn(x)
+            }
+        }
+        O ⟷ O → callFn(x)
+    
+        
+
+
+
+
+Collection Operators:
+D:
+     ◖D = keys
+     ◗D = values
+
+A:
+op A:
+     ¬A = reverse A                                                ¬(1 2 3) = 3 2 1
+     ↑A = return list of sorted indexes of the Array             ↑(3 1 5 4) = 1 0 3 2
+
+A op A:
+    A⋃A = union, element-wise concat                          1 2 3 ⋃ 1 2 3 = 1 1 2 2 3 3
+    A⋂A = intersection, elements contained in A and B only    1 2 3 ⋂ 1 2   =  1 2
+    A⊂A = comparison, that the left operand is a proper
+          subset of the right operand                           1 2 ⊂ 1 2 3 = T,   
+                                                              1 2 3 ⊂ 1 2 3 = F
+
+    A⊆A = comparison, that the left operand is either a
+          subset or is directly equivalent                    1 2 3 ⊆ 1 2 3 = T
+
+  ..A A = catenate, append, join. This joins multiple       ..(1 2 3) (1 2) = 1 2 3 1 2
+          arrays                                            ..1;2;3 4;5 6   = 1 2 3 4 5 6
+
+A op n:
+   n ↑A = from A take n                                       2 ↑(1 2 3)   = 1 2
+                                                             -2 ↑(1 2 3)   = 2 3
+
+
+
+    
+
+f op A:
+    f /A = map f over A                 , where f x = x + 1,      f  /1 2 3 4 = 2 3 4 5
+    f |A = filter f on A                , where f x = x > 5,      f  |4 5 6 7 = 6 7
+    f ?A = find first index where true  , where f x = x > 5,      f  ?1 2 3 4 = 0
+   f ??A = return all indexes where true, where f x = x > 5,      f ??1 2 3 4 = 0 1 2 3
+    f @A = return first value where true, where f x = x > 5,      f  @1 2 3 4 = 1
+   f @@A = return all values where true , where f x = x > 5,      f @@3 4 5 6 = 3 4
+
+
+
+Number Operators:
+ 
+   n □n = take n values from right n where right n is an          7 □52 = 51 3 17 18 6 28 43
+          int to "roll" n times   
+
+
