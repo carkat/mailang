@@ -249,55 +249,73 @@ f ← a = 5
 
 
 
-fizzBuzz n = ιn / (x: five x + three x ⊕ x)
-: isDivisibleBy n s x = ¬(x % n) → s ⊕ x
-  three ← isDivisibleBy 3 'Buzz'
-  five  ← isDivisibleBy 5 'Fizz'
-
-
-z x -> h -> g -> f
-
-battleship M = isValid M
-: sortedLocation r = ↑r|(x: x = 0)
-  checColumn M = M/(r:[;sortedLocation r])
-  permutations ← ((4 1) (3 2) (3 1 1) (2 1 1 1))
+fizzBuzz n = ιn / (x: isDivisibleBy 5 'Fizz' x + isDivisibleBy 3 'Buzz' x ⊕ x)
+: isDivisibleBy n s x = ¬(x % n) → s ⊕ ''
 
 
 
-bs M =
-: shipsRemainig ← ships|(s: found s)
-  ships   ← 4 2ρ3 3ρ2 4ρ1
-  found s ← 
-
-grid i: ι(ships↑1)/(s:s+i)
-count
-
-
-- special case when the board has only subs left
-- special case, check that all ships don't touch
-- ugghhhhh!
 battleships board ships = 
 | #ships & boardHasShip board → ∇ board 1↓ships 
 | ¬(#ships) 'valid'
 | 'invalid'
 : s ← 1↑(↓ships)
+  offset n = ι(n+s)/(x:x+n)
+
+  - colOffset is used to determine how many times the board has shifted
+  - determines where to look up the location of the ship relative to the board later
+  boardHasShip board colOffset = #board > 0 → (board ∃ gridWithShip ⊕ ∇ 1↓board (colOffset + 1))
+  : gridWithShip row i = canMakeGrid i & canMakeGrid colOffset & gridHasShip i colOffset
+    col ← colOffset ⊕ 0
   canMakeGrid  i      = i + s < #board 
-  matrix       ri col = board[ι(s + ri);ι(s + col)]↑s
+  matrix       ri col = board[offset ri; offset col]↑s
   gridHasShip  ri col = g ∃ shipInRowOrCol col
   : g ← matrix ri col
-    shipInRowCol  col gridRow gi = (shipInRow col gridRow ri gi) ∨ (shipInCol col gridRow ri gi)
-    shipInRow     col gridRow gi = gridRow_add = s & shipsDontTouch 'row' ri gi col
-    shipInCol     col gridRow gi = gridRow_add = s & shipsDontTouch 'col' ri gi col
-
-  boardHasShip board offset = #board → (board ∃ gridWithShip ⊕ ∇ 1↓board (o + 1))
-  : gridWithShip r i = canMakeGrid i & canMakeGrid o & gridHasShip r i
-    o ← offset ⊕ 0
+    shipInRowCol       gridRow gi = (shipIn 'row' gridRow gi) ⋁ (shipInCol 'col' col rotatedG gi)
+    shipIn orientation gridRow gi = gridRow_add = s & (shipsDontTouch orientation ri col gi)
+    rotatedG ← -1↻g[gi]
 
   - make a box around the ship. if the box reduces to size of ship, its valid
-  shipsDontTouch type ri gi col = shipLocation_(a row: a + row_add) = s
-  : bounds       ← (i - 1 < #board) (i < #board) (i + 1 < #board)
-    shipLocation ← 
-    | type = 'row' → 
-    | type = 'col' → 
+  shipsDontTouch orientation ri col gi = shipWithPadding_(a row: a + row_add) = s
+  : shipWithPadding ← 
+    | orientation = 'row' → board[padding; offset]
+    | orientation = 'col' → board[offset ;padding]
+    padding  ←  ((m1 > 0 → m1) location (p1 < #board → p1))| (x:x)
+    location ← ri + gi
+    p1       ← location + 1
+    m1       ← location - 1
 
 
+    - the missingVals need another giSides for the length of ship
+    - for example, check right and left are zero unless borders
+    - 0 0 0 0 0 0 
+    - 0 1 1 1 1 0 
+    - 0 0 0 0 0 0 
+
+    - check top and bottom for zero unless borders
+    - 0 0 0 
+    - 0 1 0 
+    - 0 1 0 
+    - 0 1 0 
+    - 0 1 0 
+    - 0 0 0 
+
+
+∇    = recurse in THIS function, recurses inside the lowest function that is declared
+↓A   = sort descending
+#A   = count of A, like A.length
+n ↓A = drop n from A
+n ↑A = take n values from A. -n takes n values from the right
+←    = variable assignment
+=    = function declaration OR equality check
+→    = cond → val, like ternary cond?val:else cond → val ⊕ else
+¬    = not
+∨    = like || 
+ιn   = array of 0 to n
+A_f  = array.reduce A with function f
+A/f  = map A with f
+A|f  = filter A with f
+A∃f  = exists, returns true if function evaluates to true for a single value in A, 
+       breaking the loop upon finding the first value
+n↻A  = matrix or array rotation. matrix rotation rotates around the center 90 degrees
+       +n left ritation, -n right rotation
+⊕   =  xor, execute the right if the left is false or has no value
