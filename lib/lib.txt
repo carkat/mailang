@@ -1,10 +1,10 @@
-
 - a comment
 num   ← 5
 float ← 5.5
 A     ← 1 2 3
 B     ← 2 3 4
 D     ← a`A b`num c`6
+
 
 emptyArr ← []
 
@@ -86,7 +86,8 @@ remove A B = A - B
 - if you need persistent variables in function scope
 - : is read "where"
 sums2 A = Σ B
-: B ← filter (n: (n % 2) = 0) A
+: B ← filter (a b: (n % 2) = 0) A
+
 
 sums3 A = Σ B
 : B ← filter (n i C: n < C(i + 1)) A
@@ -129,10 +130,10 @@ uniqueSet   A = { B + a | a ∈ A, ¬exists a B }
 : B ← []
 
 
-solution x y = map (mapped κ) x
-  : κ ← #x ρ y
-    α ← 'abcdefghijklmnopqrstuvwxyz'
-    f κ char i = α[(k[i] ια + char ια % #α) % #α] 
+α ← 'abcdefghijklmnopqrstuvwxyz'
+solution secret password = map (mapped getKey) x
+  : getKey ← #secret ρ password 
+    f κ char i = α[(κ[i] ια + char ια % #α) % #α] 
 
 f a b c =
 | a < b      → a + b + c 
@@ -140,42 +141,47 @@ f a b c =
 | a < b
 & a > b + c  → 2ab ÷ 3
 
+fact n = (n = 1 → n) ⊕ ..n(∇n - 1)
 
 
 
-map     A fn  = f/A
-filter  A fn  = f|A
-roll    A     =  □A
-deal    A n   = n□A
-indexOf A val = A?val
-findInd A fn  = f?A
 
-first   A val = A@val
-first   A fn  = A@fn
-findAll A fn  = A@@fn
-enlist  A B C = ..A B C
+
+
+map     A f = A/f
+filter  A f = A|f
+roll    A   = A□
+deal    A n = A□n
+indexOf A x = A?x
+findInd A f = A?f
+
+first   A x = A@x
+first   A f = A@f
+findAll A f = A@@f
+enlist  A B C = ..A B C (1 2) 3 4
 
 
 
 - A ← 1 2 ; 3 4
 - B ← 1 2 ; 3 4
-concat A B C = [..A B C]
+concat A B C = ..A B C
 - (1 2 ; 3 4) (1 2 ; 3 4)
 
-laminate A B C = [A..B..C]
+laminate A B C = A..B C
 - 1 2 1 2 ;  
 - 3 4 3 4
 
-union A B = A ⋃ B
+union A A = A ⋃ A
 - 1 2 ; 3 4
 
-drop   A d = A↓d
-take   A t = A↑t
+drop   A n = A↓n
+take   A n = A↑n
 rotate A n = A↻n
+
 r A n=A↑(i-#A)+A↑i:i←(n+#A)%#A
 
 rotate A n = A↑(i-#A)+A↑i
-:i ← (n+#A)%#A
+:i ← (n + #A) % #A
 
 typeCheck A = A ≊ 'A'
 
@@ -188,7 +194,8 @@ string ← '
   '
 string2 ← 'a single line string
 
-smallest A = { a | a ∈ A, a < 1↑A } → #_ = 1 → 1↑_ ⊕ f 1↷_
+smallest A = { a | a ∈ A, a < 1↑A } -> #_ = 1 -> 1↑_ ⊕ ∇ 1↷_
+
 
 parseBody body = { main where }
 : wSplit ← s ↓body
@@ -238,5 +245,59 @@ fn a b =
   e ← d - (0 1) 
   f ← d[_ (1 2)]
 
+f ← a = 5
+
+
+
+fizzBuzz n = ιn / (x: five x + three x ⊕ x)
+: isDivisibleBy n s x = ¬(x % n) → s ⊕ x
+  three ← isDivisibleBy 3 'Buzz'
+  five  ← isDivisibleBy 5 'Fizz'
+
+
+z x -> h -> g -> f
+
+battleship M = isValid M
+: sortedLocation r = ↑r|(x: x = 0)
+  checColumn M = M/(r:[;sortedLocation r])
+  permutations ← ((4 1) (3 2) (3 1 1) (2 1 1 1))
+
+
+
+bs M =
+: shipsRemainig ← ships|(s: found s)
+  ships   ← 4 2ρ3 3ρ2 4ρ1
+  found s ← 
+
+grid i: ι(ships↑1)/(s:s+i)
+count
+
+
+- special case when the board has only subs left
+- special case, check that all ships don't touch
+- ugghhhhh!
+battleships board ships = 
+| #ships & boardHasShip board → ∇ board 1↓ships 
+| ¬(#ships) 'valid'
+| 'invalid'
+: s ← 1↑(↓ships)
+  canMakeGrid  i      = i + s < #board 
+  matrix       ri col = board[ι(s + ri);ι(s + col)]↑s
+  gridHasShip  ri col = g ∃ shipInRowOrCol col
+  : g ← matrix ri col
+    shipInRowCol  col gridRow gi = (shipInRow col gridRow ri gi) ∨ (shipInCol col gridRow ri gi)
+    shipInRow     col gridRow gi = gridRow_add = s & shipsDontTouch 'row' ri gi col
+    shipInCol     col gridRow gi = gridRow_add = s & shipsDontTouch 'col' ri gi col
+
+  boardHasShip board offset = #board → (board ∃ gridWithShip ⊕ ∇ 1↓board (o + 1))
+  : gridWithShip r i = canMakeGrid i & canMakeGrid o & gridHasShip r i
+    o ← offset ⊕ 0
+
+  - make a box around the ship. if the box reduces to size of ship, its valid
+  shipsDontTouch type ri gi col = shipLocation_(a row: a + row_add) = s
+  : bounds       ← (i - 1 < #board) (i < #board) (i + 1 < #board)
+    shipLocation ← 
+    | type = 'row' → 
+    | type = 'col' → 
 
 
