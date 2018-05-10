@@ -321,7 +321,6 @@ n↻A  = matrix or array rotation. matrix rotation rotates around the center 90 
 ⊕   =  xor, execute the right if the left is false or has no value
 
 battleship ships board = #(ships|findShips) = 0                     ⩀ Count of (found ships) in ships = 0
-
   findShips   s = shipCount s = #(ships|s)                          ⩀ found ship count = the count of this ship in ships
   : states    s = shipStates s/(st: allStates st (#st = 3 → 2 ⊕ 4)) ⩀ when state is like this         0 0 0 0 0 0
     shipCount s = (states/totalOccurencesOfShip)_add                ⩀ ship is in middle, only         0 1 1 1 1 0
@@ -333,6 +332,7 @@ battleship ships board = #(ships|findShips) = 0                     ⩀ Count of
     zeros  ←  (#s + 3)↑0
   allStates  state c = state ↻state ↻↻state ↻↻↻state  ⩀ all possible orientations of ship states
 
+λ
 
 get n = result
 : result ← ι9/(x i A: something [x] i A) → ↑_ → [#_, 1↑_, -1↑_]
